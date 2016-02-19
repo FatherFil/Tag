@@ -30,4 +30,17 @@ class Library
         return $output;
     }
 
+    public function saveTweets() {
+        /**
+         * @var $tweet Tweet
+         */
+        $dbEngine = new dbEngine();
+        foreach ($this->_tweets as $tweet) {
+            $dbEngine->insertIntoTweets($tweet);
+            $dbEngine->insertIntoIncomingQueue($tweet->getID());
+            $dbEngine->saveTweetJson($tweet->getID(),$tweet->getJSON());
+        }
+        unset($dbEngine);
+    }
+
 }

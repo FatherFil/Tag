@@ -61,4 +61,8 @@ class Tweet
         return $this->_author_timezone;
     }
 
+    public function getJSON() {
+        return $this->_json;
+    }
+
 }

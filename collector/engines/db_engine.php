@@ -34,10 +34,10 @@ class dbEngine
                              $tweet->getTimezone());
     }
 
-    public function insertIntoIncomingQueue($tweetID, $author) {
+    public function insertIntoIncomingQueue($tweetID) {
         $sqlQuery = "INSERT INTO queue_incoming ".
-                    "(tweet_id, author_name) VALUES ".
-                    "(%s0, %s1)";
+                    "(tweet_id) VALUES ".
+                    "(%s0)";
         DB::query($sqlQuery, $tweetID, $author);
     }
 

@@ -29,6 +29,8 @@ class TwitterEngine
             ->buildOauth($apiURL, $this->_requestMethod)
             ->performRequest();
 
+        unset($twitter);
+
         $library = new Library();
         $responses = json_decode($response);
         //die(print_r($responses));
