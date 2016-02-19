@@ -18,28 +18,6 @@ class dbEngine
 
     }
 
-    public function getTimeOfCurrentCall($callSID) {
-        // get the length of time spent on this call
-        $sqlQuery = "SELECT TIME_TO_SEC(TIMEDIFF(CURTIME(), startTimeCurrentPlay)) ".
-                    "FROM   players ".
-                    "WHERE  callID = %s0";
-        $secondsOnCurrentCall = DB::queryFirstField($sqlQuery, $callSID);
-        return floor($secondsOnCurrentCall / 60);
-    }
-
-    public function getLastTimerAlert($callSID) {
-        // get the status of the call time warnings from the session table
-        $sqlQuery = "SELECT lastTimerAlert ".
-                    "FROM   players ".
-                    "WHERE  callID = %s0";
-        $lastCallWarning = DB::queryFirstField($sqlQuery, $callSID);
-        if ($lastCallWarning == null) {
-            return 0;
-        } else {
-            return $lastCallWarning;
-        }
-    }
-
     public function getLastGridCell($callSID) {
         // get the last grid cell the player was in
         $sqlQuery = "SELECT gridID ".
@@ -99,17 +77,6 @@ class dbEngine
         $smsTextForCurrentCell = DB::queryFirstField($sqlQuery, $currentGridCell);
         if (empty($smsTextForCurrentCell)) {$smsTextForCurrentCell="<!-- Unable to locate text for grid ".$currentGridCell."-->";}
         return $smsTextForCurrentCell;
-    }
-
-    public function getAudioFilenameForCurrentCell($currentGridCell) {
-        // get the filename for the audio file for this curent cell
-        $sqlQuery = "SELECT audio.filename ".
-                    "FROM   audio, grid ".
-                    "WHERE  grid.audioID = audio.audioID ".
-                    "AND    grid.gridID = %s0";
-        $audioFilenameForCurrentCell = DB::queryFirstField($sqlQuery, $currentGridCell);
-        if (empty($audioFilenameForCurrentCell)) {$audioFilenameForCurrentCell="<!-- Unable to locate audio for grid ".$currentGridCell."-->";}
-        return $audioFilenameForCurrentCell;
     }
 
     public function getAudioIDsForInventoryItem($inventoryID) {
