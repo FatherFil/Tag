@@ -1,8 +1,5 @@
 <?php
 
-    header("content-type: text/xml");
-    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-
     $_procStart = microtime();
     require_once "game_engine/game_constants.php";
     require_once "game_engine/game_engine.php";
