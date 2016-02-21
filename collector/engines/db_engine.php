@@ -22,7 +22,7 @@ class dbEngine
      * @param $tweet Tweet
      */
     public function insertIntoTweets($tweet) {
-        $sqlQuery = "INSERT INTO tweets ".
+        $sqlQuery = "INSERT INTO tweets_incoming ".
                     "(tweet_id, text, created_at, author_id, author_name, profile_image_url, timezone) VALUES ".
                     "(%s0, %s1, %s2, %s3, %s4, %s5, %s6)";
         DB::query($sqlQuery, $tweet->getID(),
@@ -38,7 +38,7 @@ class dbEngine
         $sqlQuery = "INSERT INTO queue_incoming ".
                     "(tweet_id) VALUES ".
                     "(%s0)";
-        DB::query($sqlQuery, $tweetID, $author);
+        DB::query($sqlQuery, $tweetID);
     }
 
     public function saveTweetJson($tweetID, $json) {
