@@ -1,26 +1,30 @@
 <?php
 
     $_procStart = microtime();
-    require_once "game_engine/game_constants.php";
-    require_once "game_engine/game_engine.php";
+    require_once ("handlers/queue_handler.php");
 
-    // get the queue of incoming commands
-    // loop around the queue
-    //   load where the player session
-    //   load recognised commands from current cell
-    //   is the move the player has asked for a recognised command
-    //   if so
-    //      parse the command and process
-    //      get the result into a string
-    //   else if not
-    //      get the error text into a string
-    //   end if
-    //   push string to outgoing twitter queue
-    //   write output to log
-    // end loop
-    // write timings of processing to log
+// get the queue of incoming commands
+// loop around the queue
 
+    $incomingHandler = new queueHandler();
+    $waitingActions = $incomingHandler->getIncomingQueue();
 
+    foreach($waitingActions as $action) {
+        //   load/populate the player session
+        //   load recognised commands from current cell
+        //   is the move the player has asked for a recognised command
+        //   if so
+        //      parse the command and process
+        //      get the result into a string
+        //   else if not
+        //      get the error text into a string
+        //   end if
+        //   push string to outgoing twitter queue
+        //   write output to log
+    }
+
+// end loop
+// write timings of processing to log
 
 
 
@@ -28,6 +32,9 @@
 
 
     /*
+
+    require_once "game_engine/game_constants.php";
+    require_once "game_engine/game_engine.php";
 
     // Collect the posted array
     $_arrPOST = $_POST;

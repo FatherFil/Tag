@@ -2,11 +2,9 @@
 
 class actions {
 
+    /** @var gameSession $_gameSession  */
+    private $_gameSession;
     private $_recognisedCommands;
-
-
-
-
 
     public function __construct() {
         $this->_recognisedCommands = array();
@@ -31,7 +29,7 @@ class actions {
     }
 
     private function movePlayer() {
-        $command = $this->_currentCommand;
+        $command = $this->_gameSession->getCurrentCommand();
 
         // This was the call from the Twilio engine to get the allowed moves - we'll need something similar
         // $allowedMoves = $dbEngine->getPathsFromGridCell($this->_callSession->getCurrentGridCell());
