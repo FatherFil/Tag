@@ -4,6 +4,31 @@
     require_once "game_engine/game_constants.php";
     require_once "game_engine/game_engine.php";
 
+    // get the queue of incoming commands
+    // loop around the queue
+    //   load where the player session
+    //   load recognised commands from current cell
+    //   is the move the player has asked for a recognised command
+    //   if so
+    //      parse the command and process
+    //      get the result into a string
+    //   else if not
+    //      get the error text into a string
+    //   end if
+    //   push string to outgoing twitter queue
+    //   write output to log
+    // end loop
+    // write timings of processing to log
+
+
+
+
+
+
+
+
+    /*
+
     // Collect the posted array
     $_arrPOST = $_POST;
 
@@ -72,6 +97,8 @@
 
     // Last job is to echo out the return XML to Twilio
     echo "\n".$_returnXML;
+
+    */
 
 ?>
 
