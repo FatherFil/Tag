@@ -2,29 +2,62 @@
 
     $_procStart = microtime();
     require_once ("handlers/queue_handler.php");
+    require_once ("handlers/log_handler.php");
 
 // get the queue of incoming commands
 // loop around the queue
 
-    $incomingHandler = new queueHandler();
-    $waitingActions = $incomingHandler->getIncomingQueue();
+    $log = new logHandler();
+    $log->writeToLog("Start cronjob");
 
-    foreach($waitingActions as $action) {
+    $queueHandler = new queueHandler();
+    $waitingActions = $queueHandler->getIncomingQueue();
+
+    foreach($waitingActions as $row) {
+        $log->writeToLog("Start row for ".$row['tweet_id']);
+
         //   load/populate the player session
         //   load recognised commands from current cell
+        $action = new gameAction();
+        $action->loadSessionFromTweetID($row['tweet_id']);
+        $action->loadRecognisedCommands();
+        $action->loadAction();
+
         //   is the move the player has asked for a recognised command
-        //   if so
-        //      parse the command and process
-        //      get the result into a string
-        //   else if not
-        //      get the error text into a string
+        if ($action->isActionRecognisedCommand()) {
+            $log->writeToLog("Action is a recognised command");
+            //   if so
+            //      parse the command and process
+            $action->processAction();
+            //      get the result into a string
+            $action->constructReturnMessage();
+            $output = $action->getReturnMessage();
+        } else {
+            $log->writeToLog("Action is NOT a recognised command");
+            //   else if not
+            //      get the error text into a string
+            $output = "Unable to recognise command.";
+        }
+
         //   end if
         //   push string to outgoing twitter queue
+        $queueHandler->addToOutgoingQueue();
+
+        $_procEnd = microtime();
+        $_procComplete = $_procEnd - $_procStart;
+
         //   write output to log
+        $log->writeToLog("End row - Time to complete ".$_procComplete);
+
     }
 
 // end loop
 // write timings of processing to log
+
+    $_procEnd = microtime();
+    $_procComplete = $_procEnd - $_procStart;
+
+    $log->writeToLog("End cronjob - Time to complete ".$_procComplete);
 
 
 

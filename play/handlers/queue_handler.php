@@ -9,7 +9,11 @@
 class queueHandler {
 
     public function getIncomingQueue() {
-        return "";
+        $dbEngine = new dbEngine();
+    }
+
+    public function addToOutgoingQueue() {
+
     }
 
 }

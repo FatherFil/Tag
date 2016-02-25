@@ -10,6 +10,15 @@ class dbEngine
     // Constructor
 
     // Methods
+
+    public function getIncomingQueue() {
+        $sqlQuery = "SELECT tweet_id ".
+                    "FROM   queue_incoming ".
+                    "LIMIT  10";
+        return DB::query($sqlQuery);
+    }
+
+    /*
     public function getPlayerID($callSID) {
         $sqlQuery = "SELECT playerID ".
                     "FROM   players ".
@@ -244,5 +253,6 @@ class dbEngine
                     "WHERE  telNumber = %s0";
         DB::query($sqlQuery, $telNumber);
     }
+*/
 
 }

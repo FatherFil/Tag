@@ -17,7 +17,6 @@ class dbEngine
         return DB::queryFirstField($sqlQuery);
     }
 
-    //$id,$text,$created,$author_id,$author_name,$profileImageUrl,$timezone
     /**
      * @param $tweet Tweet
      */
