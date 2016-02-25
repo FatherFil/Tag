@@ -1,0 +1,31 @@
+COLLECTOR
+> Create production twitter account
+> Create development recipient twitter account
+> Create development player twitter account
+> Connect up API hooks to development account
+> Get Collector cronjob running on development twitter account
+> Send tweets from development player account
+> Watch input into database from Collector cronjob
+
+PROCESSOR
+> Pickup tweet from incoming_queue
+> Process tweet and push outcome to queue_outgoing
+
+WRITER
+> Write writter cronjob to process queue_outgoing tweets and send to twitter
+
+
+
+NOTES
+> Each room could have a special function value. The special function is loaded from an extending class
+> The extending class (one class per game) could add to a set of predefined actions. The class would be loaded  before the commands are processed
+
+> The base class could just cover standard command parsing:
+>>> go [direction], head [direction], take [direction]path etc.
+>>> use [item]
+>>> take [item]
+
+> Expansions from extending class could check name of room and add commands into accepted commands array
+> Base class could include function to addRecognisedCommand - it takes the command and the function in the extended class that accepts it
+> Base class could also include function to removeRecognisedCommand? eg; remove north, south, east, west to go down into dungeon or up stairs
+

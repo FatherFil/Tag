@@ -1,0 +1,5 @@
+email: twitter-test-server@twitteradventuregame.com
+twitter: TAG_Dev_Srvr_01/#I&0wRagQ2leBMGul%Htzo9B
+
+twitter-test-player@twitteradventuregame.com
+twitter: tag_dev_plyr_01/ym8^i4!@7FUqjAyGBdgqTvCc
