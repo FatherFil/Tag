@@ -25,6 +25,4 @@ class gameSession {
         return in_array($item, $this->_inventory);
     }
 
-
-
 }

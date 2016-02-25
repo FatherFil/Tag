@@ -28,6 +28,7 @@
             $log->writeToLog("Action is a recognised command");
             //   if so
             //      parse the command and process
+            //      -> check standard actions first, then extra actions
             $action->processAction();
             //      get the result into a string
             $action->constructReturnMessage();
@@ -36,6 +37,8 @@
             $log->writeToLog("Action is NOT a recognised command");
             //   else if not
             //      get the error text into a string
+            //      -> we need to make sure we pick a suitable message back
+            //      -> or pick from a vast array of messages back
             $output = "Unable to recognise command.";
         }
 
