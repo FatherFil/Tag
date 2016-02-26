@@ -3,11 +3,12 @@
 class queueHandler {
 
     public function getIncomingQueue() {
-        $dbEngine = new dbEngine();
-        return "";
+        $dbEngine = new dbEngineGame();
+        $queue = $dbEngine->getIncomingQueue();
+        return $queue;
     }
 
-    public function addToOutgoingQueue() {
+    public function addToOutgoingQueue($tweet) {
 
     }
 

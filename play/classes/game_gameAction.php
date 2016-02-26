@@ -1,6 +1,7 @@
 <?php
 
 require_once("game_commands.php");
+require_once("game_session.php");
 
 class gameAction extends gameSession {
 
@@ -10,6 +11,7 @@ class gameAction extends gameSession {
 
     public function __construct() {
         $this->_commands = new gameCommands();
+        parent::__construct();
     }
 
     public function loadAction() {
@@ -25,6 +27,10 @@ class gameAction extends gameSession {
     }
 
     public function processAction() {
+
+    }
+
+    public function isActionRecognisedCommand() {
 
     }
 

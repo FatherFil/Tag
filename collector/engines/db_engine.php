@@ -22,7 +22,7 @@ class dbEngine
      */
     public function insertIntoTweets($tweet) {
         $sqlQuery = "INSERT INTO tweets_incoming ".
-                    "(tweet_id, text, created_at, author_id, author_name, profile_image_url, timezone) VALUES ".
+                    "(tweet_id, text, created_at, author_id, author_screen_name, profile_image_url, timezone) VALUES ".
                     "(%s0, %s1, %s2, %s3, %s4, %s5, %s6)";
         DB::query($sqlQuery, $tweet->getID(),
                              $tweet->getText(),

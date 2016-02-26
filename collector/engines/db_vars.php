@@ -19,7 +19,7 @@ class dbVars
             $this->_username = "root";
             $this->_password = "";
             $this->_appName = "advgame";
-            $this->_dbVer = "0_1";
+            $this->_dbVer = "0_2";
             $this->_dbName = $this->_appName."_v".$this->_dbVer;
             $this->_devmachine = true;
         } else {
