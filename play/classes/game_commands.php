@@ -1,8 +1,11 @@
 <?php
 
+require_once ('enum_commandType.php');
+
 class gameCommands  {
 
     private $_commands;
+    private $_commandType;
 
     public function loadRecognisedCommands() {
         $this->fillStandardCommandsWithAllCompassPoints();

@@ -14,16 +14,17 @@
 
     /* ********************************************* */
     /* Test setup here - comment out when not needed */
-    require_once ("handlers/test_handler.php");
-    require_once ("engines/database/db_engine_tests.php");
+        require_once ("handlers/test_handler.php");
+        require_once ("engines/database/db_engine_tests.php");
 
-    $test = new testHandler();
-    $test->clearLog();
-    $test->clearIncomingQueueAndTweets();
-    $test->clearPlayers();
-    $test->createIncomingTweet("bob","Hello");
-    $test->createIncomingTweet("john","Hello");
-    $test->createIncomingTweet("fred","Hello");
+        $test = new testHandler();
+        $test->clearLog();
+        $test->clearIncomingQueueAndTweets();
+        $test->clearOutgoingQueue();
+        $test->clearPlayers();
+        $test->createIncomingTweet("bob","Hello");
+        $test->createIncomingTweet("john","Hello");
+        $test->createIncomingTweet("fred","Hello");
     /* End test strings */
     /* **************** */
 
@@ -38,27 +39,20 @@
     foreach($waitingActions as $row) {
         $log->writeToLog("Start row", $row['tweet_id']);
 
-        // load/populate the player session
-        // load recognised commands from current cell
         $action = new gameAction();
         $action->assignTweetID($row['tweet_id']);
 
-        // have we seen this player before? are they new?
         if ($action->isExistingPlayer()) {
             $action->loadSessionFromTweetID();
+            $action->loadCurrentCell();
             $action->loadRecognisedCommands();
             $action->loadAction();
 
-            //   is the move the player has asked for a recognised command
             if ($action->isActionRecognisedCommand()) {
                 $log->writeToLog("Action is a recognised command", $row['tweet_id']);
-                // if so
-                //   parse the command and process
-                //   -> check standard actions first, then extra actions
                 $action->processAction();
-                // get the result into a string
                 $action->constructReturnMessage();
-                $output = $action->getReturnMessage();
+                $output = $action->getOutgoingTweet();
             } else {
                 $log->writeToLog("Action is NOT a recognised command", $row['tweet_id']);
                 // else if not
@@ -68,23 +62,22 @@
                 $output = "Unable to recognise command.";
             }
         } else {
-            // New player!
             $log->writeToLog("New player found", $row['tweet_id']);
             $action->buildNewPlayer();
+            $action->loadSessionFromTweetID();
+
+            $action->buildWelcomeTweet();
+            $action->queueOutgoingTweet();
+            $log->writeToLog("Built outgoing tweet - ". $action->getOutgoingTweet());
         }
 
-        // end if
-        // push string to outgoing twitter queue
-        $tweet = $action->buildOutgoingTweet();
-        $queueHandler->addToOutgoingQueue($tweet);
+        $action->constructReturnMessage();
+        $log->writeToLog("Built outgoing tweet - ". $action->getOutgoingTweet());
+        $action->queueOutgoingTweet();
 
-        //   write output to log
         $log->writeToLog("End of row", $row['tweet_id']);
 
     }
-
-    // end loop
-    // write timings of processing to log
 
     $log->writeToLog("End cronjob");
 

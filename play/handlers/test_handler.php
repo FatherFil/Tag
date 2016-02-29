@@ -24,4 +24,9 @@ class testHandler {
         $dbEngine->clearPlayers();
     }
 
+    public function clearOutgoingQueue() {
+        $dbEngine = new dbEngineTests();
+        $dbEngine->clearOutgoingQueue();
+    }
+
 }

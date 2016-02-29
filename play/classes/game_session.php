@@ -12,6 +12,7 @@ class gameSession {
     private $_currentGridCell;
     private $_isExistingPlayer = false;
     private $_inventory;
+    private $_outgoingMessage;
 
     public function __construct() {
         $this->_inventory = new gameInventory();
@@ -39,17 +40,33 @@ class gameSession {
 
     public function buildNewPlayer() {
         $dbEngine = new dbEngineGame();
-        $session = $dbEngine->createNewPlayer($this->_tweetID);
+        $dbEngine->createNewPlayer($this->_tweetID);
+        $this->loadSessionFromTweetID();
     }
 
-    public function buildOutgoingTweet() {
-        $tweet = "";
-        if ($this->_isExistingPlayer) {
+    public function buildWelcomeTweet() {
+        $this->_outgoingMessage = WELCOME_TWEET;
+    }
 
-        } else {
-            $tweet = WELCOME_TWEET;
-        }
-        return $this->_playerScreenName.' '.$tweet;
+    public function queueOutgoingTweet() {
+        $queueHandler = new queueHandler();
+        $queueHandler->addToOutgoingQueue($this->buildTweetString());
+    }
+
+    public function getOutgoingTweet() {
+        return $this->buildTweetString();
+    }
+
+    public function getCurrentGridCell() {
+        return $this->_currentGridCell;
+    }
+
+    public function getTweetID() {
+        return $this->_tweetID;
+    }
+
+    private function buildTweetString() {
+        return sprintf('@%s %s',$this->_playerScreenName, $this->_outgoingMessage);
     }
 
 }

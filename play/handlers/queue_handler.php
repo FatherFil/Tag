@@ -9,7 +9,8 @@ class queueHandler {
     }
 
     public function addToOutgoingQueue($tweet) {
-
+        $dbEngine = new dbEngineGame();
+        $dbEngine->addToOutgoingQueue($tweet);
     }
 
 }

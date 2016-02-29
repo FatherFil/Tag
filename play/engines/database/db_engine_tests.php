@@ -33,4 +33,10 @@ class dbEngineTests extends dbEngine {
         DB::query($sqlQuery);
     }
 
+    public function clearOutgoingQueue() {
+        $sqlQuery = "TRUNCATE TABLE queue_outgoing";
+        DB::query($sqlQuery);
+
+    }
+
 }
